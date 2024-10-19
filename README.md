@@ -1,87 +1,67 @@
-Cryptographic Misuse Detection Using Machine Learning
-This project aims to detect cryptographic misuse in Java code by analyzing patterns of cryptographic API usage. The workflow involves parsing Java code, extracting cryptographic features, and applying machine learning models to classify the code as either secure or misuse based on its cryptographic practices.
+# Cryptographic Misuse Detection Using Machine Learning
 
+This project focuses on detecting cryptographic misuse in Java code by analyzing cryptographic API usage patterns. The project uses machine learning to classify Java code snippets as either **secure** or **misuse** based on cryptographic practices.
 
-Project Overview
-Cryptographic misuse is a common security vulnerability in software. This project focuses on detecting improper cryptographic practices in Java code, such as using weak algorithms (e.g., MD5, SHA1) or insecure providers. By applying machine learning models to extracted features from cryptographic API calls, the project aims to classify code as either secure or misuse.
+## Table of Contents
+- [Project Overview](#project-overview)
+- [Features](#features)
+- [Data](#data)
+- [Usage](#usage)
+- [Model Training](#model-training)
+- [Evaluation](#evaluation)
+- [Future Work](#future-work)
+- [Contributing](#contributing)
 
-Features
-Java Code Parsing: Parse Java code snippets using the javalang library.
-Feature Extraction: Automatically extract cryptographic API usage (e.g., algorithms, methods, providers) from Java code.
-Machine Learning: Train models to classify cryptographic usage as either secure or misuse.
-Evaluation: Measure model performance using metrics such as accuracy, precision, recall, F1-score, and confusion matrix.
-Visualization: Generate a confusion matrix to visualize model performance.
-Support for Secure and Misuse Classification: Analyze both cryptographic misuse and secure practices.
-Installation
-To run this project locally, follow these steps:
-Install the required dependencies:
+## Project Overview
+The goal of this project is to identify improper cryptographic practices in Java code, such as using weak algorithms (e.g., `MD5`, `SHA1`) or insecure providers. By extracting features from cryptographic API calls and applying machine learning, the model classifies whether the cryptography in the code is **secure** or **misused**.
 
-bash
-Copy code
-pip install -r requirements.txt
-Required Python Libraries:
+## Features
+- **Java Code Parsing**: Uses `javalang` to parse Java code and extract cryptographic API usage.
+- **Feature Extraction**: Automatically extracts key cryptographic details (algorithms, methods, and providers).
+- **Machine Learning**: Trains models to classify cryptographic usage as either secure or misuse.
+- **Evaluation Metrics**: Provides accuracy, precision, recall, F1-score, and confusion matrix for model performance.
 
-pandas
-javalang
-scikit-learn
-matplotlib
-xgboost (for alternative models)
-imblearn (for handling class imbalance, if needed)
-(Optional) Create a virtual environment:
+## Data
+The project requires two types of Java code snippets:
+1. **Cryptographic Misuse Code**: Examples of improper cryptographic usage.
+2. **Secure Cryptographic Code**: Examples demonstrating secure cryptographic practices.
 
-bash
-Copy code
-python -m venv env
-source env/bin/activate  # On Windows: env\Scripts\activate
-Data
-The project uses two types of data:
+These snippets are stored in a `.zip` file (`research/crypto_misuse_code_snippets.zip`), which contains the Java files used for analysis.
 
-Cryptographic Misuse Code: Java code snippets that demonstrate improper cryptographic usage, such as weak algorithms or insecure providers.
-Secure Cryptographic Code: Java code snippets that demonstrate best practices in cryptographic usage.
-The Java code snippets should be provided in the following format:
+## Usage
+1. **Feature Extraction**: Extract cryptographic features from Java files using:
+   ```bash
+   python feature_extraction.py
+Model Training: Train machine learning models to classify code snippets:
 
-research/crypto_misuse_code_snippets.zip: Contains the misuse and secure Java code snippets.
-Make sure to place your .zip file in the correct path or modify the script to point to your dataset location.
-
-Usage
-To run the project and extract cryptographic features:
-
-Extract Features from Java Code:
-
-Extract features like algorithms, methods, and providers from the Java code.
-Run the script:
-bash
-Copy code
-python feature_extraction.py
-Train and Evaluate Machine Learning Models:
-
-Train machine learning models to classify code snippets as secure or misuse.
-Run the training script:
 bash
 Copy code
 python train_model.py
-Generate Confusion Matrix:
+Evaluate Model Performance: Generate a confusion matrix to visualize the model's classification results:
 
-Use the confusion matrix to visualize model performance.
-You can modify confusion_matrix.py to run this step:
 bash
 Copy code
 python confusion_matrix.py
 Model Training
-Random Forest Classifier: The project initially uses a RandomForestClassifier to classify cryptographic usage.
-XGBoost: You can experiment with XGBoost or other classifiers like SVM, Logistic Regression, etc.
-Feature Engineering: Add more features such as key sizes, cipher modes, or additional cryptographic details.
-Evaluation
-You can evaluate the model performance using:
+The project uses:
 
-Accuracy: The proportion of correctly classified instances.
-Precision: The accuracy of positive predictions (misuse cases).
-Recall: The proportion of actual misuse cases that were correctly predicted.
-F1-Score: The harmonic mean of precision and recall, balancing the two.
-Confusion Matrix: Visualizes the true positives, true negatives, false positives, and false negatives.
-Future Work
-Feature Expansion: Add more cryptographic-related features, such as key sizes, cipher modes, padding schemes, and exception handling.
-Hyperparameter Tuning: Experiment with hyperparameter optimization techniques like GridSearchCV or RandomizedSearchCV to improve model performance.
-Support for Other Programming Languages: Expand the project to support cryptographic misuse detection in other languages like Python or C++.
-Contributing
-Contributions are welcome! Please feel free to submit a pull request or open an issue to suggest improvements or new features.
+### RandomForestClassifier: As the baseline classifier for detecting cryptographic misuse.
+### XGBoost: An alternative model used to enhance classification performance.
+To train the models, the extracted cryptographic features (e.g., algorithms, methods, providers) are used as input data. These features are numerically encoded and fed into the machine learning models. The classifier is trained to detect cryptographic misuse based on the extracted features.
+
+## Evaluation
+The model's performance is evaluated using the following metrics:
+
+Accuracy: Measures how often the model correctly classifies code snippets.
+Precision: Measures the proportion of code snippets predicted as misuse that were actually misuse.
+Recall: Measures how well the model identifies actual misuse cases.
+F1-Score: A balanced measure that combines precision and recall.
+The evaluation results, including the confusion matrix, help understand the model's ability to distinguish between secure and misuse cases in cryptographic usage.
+
+## Future Work
+Feature Expansion: Add more cryptographic features such as key sizes, cipher modes, padding schemes, and security-related flags.
+Hyperparameter Tuning: Use techniques like GridSearchCV to fine-tune model hyperparameters for better performance.
+Additional Models: Experiment with alternative machine learning models like Support Vector Machines (SVM) or Gradient Boosting (e.g., LightGBM or XGBoost).
+Cross-language Support: Extend the project to support other programming languages such as Python or C++ for cryptographic misuse detection.
+## Contributing
+Contributions are welcome! Feel free to open an issue or submit a pull request if you'd like to improve the project or add new features.
