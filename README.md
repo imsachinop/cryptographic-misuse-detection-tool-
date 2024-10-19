@@ -1,17 +1,7 @@
 Cryptographic Misuse Detection Using Machine Learning
 This project aims to detect cryptographic misuse in Java code by analyzing patterns of cryptographic API usage. The workflow involves parsing Java code, extracting cryptographic features, and applying machine learning models to classify the code as either secure or misuse based on its cryptographic practices.
 
-Table of Contents
-Project Overview
-Features
-Installation
-Data
-Usage
-Model Training
-Evaluation
-Future Work
-Contributing
-License
+
 Project Overview
 Cryptographic misuse is a common security vulnerability in software. This project focuses on detecting improper cryptographic practices in Java code, such as using weak algorithms (e.g., MD5, SHA1) or insecure providers. By applying machine learning models to extracted features from cryptographic API calls, the project aims to classify code as either secure or misuse.
 
@@ -24,13 +14,6 @@ Visualization: Generate a confusion matrix to visualize model performance.
 Support for Secure and Misuse Classification: Analyze both cryptographic misuse and secure practices.
 Installation
 To run this project locally, follow these steps:
-
-Clone the repository:
-
-bash
-Copy code
-git clone https://github.com/yourusername/cryptographic-misuse-detection.git
-cd cryptographic-misuse-detection
 Install the required dependencies:
 
 bash
