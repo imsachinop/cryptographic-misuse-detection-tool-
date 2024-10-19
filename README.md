@@ -1,61 +1,104 @@
-Enhancing Cryptographic Security Through AST-Based Misuse Detection and Machine Learning
-This project implements an SVM-based classifier for detecting cryptographic misuse in software. The tool uses Joern for feature extraction through AST-based analysis and applies machine learning to classify cryptographic operations as secure or insecure.
+Cryptographic Misuse Detection Using Machine Learning
+This project aims to detect cryptographic misuse in Java code by analyzing patterns of cryptographic API usage. The workflow involves parsing Java code, extracting cryptographic features, and applying machine learning models to classify the code as either secure or misuse based on its cryptographic practices.
 
-Overview
-Cryptographic misuse can lead to security vulnerabilities. This project enhances the detection of such misuses by combining Joern’s static analysis with an SVM classifier. Two experiments are conducted on labeled datasets to classify cryptographic operations based on features extracted from source code.
-
-Key Features:
-AST-based Analysis: Feature extraction using Joern’s Code Property Graph (CPG).
-SVM Classifier: Classifies cryptographic operations as secure or insecure.
-Evaluation Metrics: Accuracy, Precision, Recall, and F1-Score.
-Visualization: Histograms of secure vs insecure instances.
+Table of Contents
+Project Overview
+Features
 Installation
-Ensure Python 3.x is installed. Install required Python libraries:
+Data
+Usage
+Model Training
+Evaluation
+Future Work
+Contributing
+License
+Project Overview
+Cryptographic misuse is a common security vulnerability in software. This project focuses on detecting improper cryptographic practices in Java code, such as using weak algorithms (e.g., MD5, SHA1) or insecure providers. By applying machine learning models to extracted features from cryptographic API calls, the project aims to classify code as either secure or misuse.
+
+Features
+Java Code Parsing: Parse Java code snippets using the javalang library.
+Feature Extraction: Automatically extract cryptographic API usage (e.g., algorithms, methods, providers) from Java code.
+Machine Learning: Train models to classify cryptographic usage as either secure or misuse.
+Evaluation: Measure model performance using metrics such as accuracy, precision, recall, F1-score, and confusion matrix.
+Visualization: Generate a confusion matrix to visualize model performance.
+Support for Secure and Misuse Classification: Analyze both cryptographic misuse and secure practices.
+Installation
+To run this project locally, follow these steps:
+
+Clone the repository:
 
 bash
 Copy code
-pip install pandas scikit-learn matplotlib numpy
-Joern Setup
-Download and install Joern following the official guide.
-
-Parse source code to generate CPG:
+git clone https://github.com/yourusername/cryptographic-misuse-detection.git
+cd cryptographic-misuse-detection
+Install the required dependencies:
 
 bash
 Copy code
-./joern-parse your_source_code_directory --output=cpg.bin
-Extract features (e.g., method calls):
+pip install -r requirements.txt
+Required Python Libraries:
+
+pandas
+javalang
+scikit-learn
+matplotlib
+xgboost (for alternative models)
+imblearn (for handling class imbalance, if needed)
+(Optional) Create a virtual environment:
 
 bash
 Copy code
-joern> cpg.method.call.name.p
-Export features to a format compatible with the SVM classifier.
+python -m venv env
+source env/bin/activate  # On Windows: env\Scripts\activate
+Data
+The project uses two types of data:
 
-Running the Classifier
-Prepare datasets with code snippets and labels (0 for secure, 1 for insecure). Optionally, include Joern-extracted features.
+Cryptographic Misuse Code: Java code snippets that demonstrate improper cryptographic usage, such as weak algorithms or insecure providers.
+Secure Cryptographic Code: Java code snippets that demonstrate best practices in cryptographic usage.
+The Java code snippets should be provided in the following format:
 
-Train the SVM classifier:
+research/crypto_misuse_code_snippets.zip: Contains the misuse and secure Java code snippets.
+Make sure to place your .zip file in the correct path or modify the script to point to your dataset location.
 
-For Experiment 1:
+Usage
+To run the project and extract cryptographic features:
 
+Extract Features from Java Code:
+
+Extract features like algorithms, methods, and providers from the Java code.
+Run the script:
 bash
 Copy code
-python experiment1_svm.py
-For Experiment 2:
+python feature_extraction.py
+Train and Evaluate Machine Learning Models:
 
+Train machine learning models to classify code snippets as secure or misuse.
+Run the training script:
 bash
 Copy code
-python experiment2_svm.py
-The classifier will output Accuracy, Precision, Recall, and F1-Score, along with a detailed classification report.
+python train_model.py
+Generate Confusion Matrix:
 
-Dataset
-Ensure the dataset is in CSV format with the following structure:
+Use the confusion matrix to visualize model performance.
+You can modify confusion_matrix.py to run this step:
+bash
+Copy code
+python confusion_matrix.py
+Model Training
+Random Forest Classifier: The project initially uses a RandomForestClassifier to classify cryptographic usage.
+XGBoost: You can experiment with XGBoost or other classifiers like SVM, Logistic Regression, etc.
+Feature Engineering: Add more features such as key sizes, cipher modes, or additional cryptographic details.
+Evaluation
+You can evaluate the model performance using:
 
-code: Cryptographic code snippet.
-label: Classification (0 = secure, 1 = insecure).
-(Optional): Features extracted from Joern.
-Results
-Accuracy: Overall performance of the classifier.
-Precision: Correctness of insecure predictions.
-Recall: The ability to detect insecure instances.
-F1-Score: Balances Precision and Recall.
-The results include visualizations showing secure vs insecure instances for cryptographic misuse categories.
+Accuracy: The proportion of correctly classified instances.
+Precision: The accuracy of positive predictions (misuse cases).
+Recall: The proportion of actual misuse cases that were correctly predicted.
+F1-Score: The harmonic mean of precision and recall, balancing the two.
+Confusion Matrix: Visualizes the true positives, true negatives, false positives, and false negatives.
+Future Work
+Feature Expansion: Add more cryptographic-related features, such as key sizes, cipher modes, padding schemes, and exception handling.
+Hyperparameter Tuning: Experiment with hyperparameter optimization techniques like GridSearchCV or RandomizedSearchCV to improve model performance.
+Support for Other Programming Languages: Expand the project to support cryptographic misuse detection in other languages like Python or C++.
+Contributing
+Contributions are welcome! Please feel free to submit a pull request or open an issue to suggest improvements or new features.
